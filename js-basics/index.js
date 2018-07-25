@@ -1,9 +1,29 @@
-'use strict';
-let updateFunctions = [];
+// Local vs Global scope
 
-for(let i = 0; i < 2; i++) {
-    updateFunctions.push(function () {return i;});
+// When declaring variables with the let or const keywords,
+// their scope is limited to the block in which they are defined.
+
+const color = 'red'; //global scope
+
+function scope() {
+    for (let i = 0; i < 5; i++) {
+        console.log(i);
+    }
+    console.log(i);  // out of scope
 }
 
-console.log(updateFunctions[1]());
+function start() {
+    const message = 'Hi';
+    const color = 'blue';
+    console.log(color);
+}
+
+function stop() {
+    const message = 'Bye';
+    console.log(color);
+}
+
+//scope();
+start();
+stop();
 

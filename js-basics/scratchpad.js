@@ -1774,3 +1774,65 @@ console.log(person.fullName);
 // Using setter
 person.fullName = 'Michael Nicholas';
 console.log(person.firstName + ' ' + person.lastName);
+
+// Try Catch 
+
+const person = {
+    firstName: 'Marinos',
+    lastName: 'Christoforou',
+    printFullName() {
+        return `${person.firstName} ${person.lastName}`
+    },
+    get fullName() {
+        return `${person.firstName} ${person.lastName}`
+    },
+    set fullName(value) {
+        if (typeof value !== 'string') 
+            throw new Error( 'Value is not a string');
+            
+
+       const parts = value.split(' ');
+       if (parts.length !== 2)
+            throw new Error('Enter a first and last name');
+
+       this.firstName = parts[0];
+       this.lastName = parts[1];
+    }    
+};
+
+try {
+    person.fullName = '';
+}
+catch(e) {
+    alert(e);
+}
+console.log(person);
+
+// Local vs Global scope
+
+// When declaring variables with the let or const keywords,
+// their scope is limited to the block in which they are defined.
+
+const color = 'red'; //global scope
+
+function scope() {
+    for (let i = 0; i < 5; i++) {
+        console.log(i);
+    }
+    console.log(i);  // out of scope
+}
+
+function start() {
+    const message = 'Hi';
+    const color = 'blue';
+    console.log(color);
+}
+
+function stop() {
+    const message = 'Bye';
+    console.log(color);
+}
+
+//scope();
+start();
+stop();
