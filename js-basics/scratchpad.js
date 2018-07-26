@@ -1836,3 +1836,40 @@ function stop() {
 //scope();
 start();
 stop();
+
+function startVar() {
+    for (var i = 0; i < 5; i++) 
+        console.log(i);
+    // following reference is still valid
+    console.log(i);
+}
+
+function startLet() {
+    for (let i = 0; i < 5; i++) 
+        console.log(i);
+    // following reference will throw undefined exception
+    console.log(i);
+}
+
+// var => function scoped variables
+// ES6 (ES2015): let, const => block-scoped 
+startVar();
+startLet();
+
+function startVar() {
+    if (true) {
+        var color = 'red';
+    }
+    console.log(color);
+}
+
+startVar();
+
+function startLet() {
+    if (true) {
+        let color = 'red';
+    }
+    console.log(color);
+}
+
+startLet();
