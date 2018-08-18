@@ -1,32 +1,22 @@
-// this references:
-// method (part of an object) => object itself
-// function (not part of an object) => global (window, global)
-const video = {
-    title: 't',
-    tags: ['a', 'b', 'c'],
-    showTags() {
-        this.tags.forEach(function(tag) {
-            console.log(this.title, tag);
-        }, this );
-    }
-};
+// Exercise 3
+// Add Error handling
 
-video.stop = function() {
-    console.log(this);
-};
+const numbers = [1, 2, 3, 4, 2, 2];
 
-function Video(title) {
-    this.title = title;
-    console.log(this);
+function countOccurrences(array, searchElement) {
+    if (!Array.isArray(array))
+        throw new Error( 'Value is not a array');
+    return array.reduce((count, currentValue) => { 
+        const occurrence = (currentValue === searchElement) ? 1 : 0;
+        return count + occurrence;
+    }, 0); 
+
 }
 
-video.stop();
-const v = new Video('Marinos');
-// Regular function by default, this, references the global object
-// If you call a function using  new operator, this, will reference a new empty object
-
-video.showTags();
-// output this.title shows undefined because it is a regular function and 
-// references the global window object.
-// To solve this problem use second parameter to foreach
-// second this references of the current object (show tags)
+try {
+    const count = countOccurrences(false, 2);
+    console.log(count);
+}
+catch(e) {
+    console.log(e.message);
+}

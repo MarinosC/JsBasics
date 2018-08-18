@@ -1444,6 +1444,22 @@ function includes(array, searchElement) {
 }
 console.log(includes(numbers, 0));
 
+// Exercise 2
+// Write a function that searches array if it includes an element
+
+const numbers = [1, 2, 3, 4];
+console.log(numbers.includes(1));
+
+function includes(array, searchElement) {
+    for(const element of array) {
+        if (element === searchElement) 
+            return true;
+    }
+    return false;
+}
+
+console.log(includes(numbers, 6));
+
 // Exercise 2 - write a function that takes an array
 // and returns a new array that excludes any elements 
 // that occur in a second array that is passed
@@ -1890,3 +1906,132 @@ function sayHi() {
 }
 
 window.sayHi();
+
+// this references:
+// method (part of an object) => object itself
+// function (not part of an object) => global (window, global)
+const video = {
+    title: 't',
+    tags: ['a', 'b', 'c'],
+    showTags() {
+        this.tags.forEach(function(tag) {
+            console.log(this.title, tag);
+        }, this );
+    }
+};
+
+video.stop = function() {
+    console.log(this);
+};
+
+function Video(title) {
+    this.title = title;
+    console.log(this);
+}
+
+video.stop();
+const v = new Video('Marinos');
+// Regular function by default, this, references the global object
+// If you call a function using  new operator, this, will reference a new empty object
+
+video.showTags();
+// output this.title shows undefined because it is a regular function and 
+// references the global window object.
+// To solve this problem use second parameter to foreach
+// second this references of the current object (show tags)
+
+// changing the value of this using self variable:
+
+const video = {
+    title: 't',
+    tags: ['a', 'b', 'c'],
+    showTags() {
+        const self = this; // referencing video object
+        this.tags.forEach(function(tag) {
+            console.log(self.title, tag);
+        }, this );
+    }
+};
+
+video.showTags();
+
+// changing the value of this using self:
+// remember functions are objects in JS
+// they have properties and methods that 
+// can be accessed with the dot notation
+// apply, call, bind methods can be used to 
+// change the value of this.
+
+function playVideo() {
+    console.log(this);
+}
+
+playVideo.call({ name: 'Marinos'});             // argument will be used as value for this
+playVideo.apply({ name: 'Marinos'});            // argument will be used as value for this
+playVideo.bind({ name: 'Marinos'})();           // argument will be used as value for this
+playVideo();                                    // this refers to Window object
+
+const video = {
+    title: 't',
+    tags: ['a', 'b', 'c'],
+    showTags() {
+        this.tags.forEach(function(tag) {
+            console.log(this.title, tag);
+        }.bind(this) );
+    }
+};
+
+video.showTags();
+
+// Using ES 6
+// Arrow functions inherit this from the containing function
+
+const video = {
+    title: 't',
+    tags: ['a', 'b', 'c'],
+    showTags() {
+        this.tags.forEach(tag => {
+            console.log(this.title, tag);
+        });
+    }
+};
+
+video.showTags();
+
+// Exercise 1
+// Write a function that sums all passed values as arguments
+// function must also accept an array
+// Arrow functions inherit this from the containing function
+
+function sum(...args) {
+    let items = [];
+    if (args.length === 1 && Array.isArray(args[0])) {
+        items = [...args[0]];
+    }
+    else {
+        items = [...args];
+    }
+    return items.reduce((a, c) => { return a + c ;});
+}
+console.log(sum(1,2,3,4,5));
+
+
+// Exercise 2
+// Write a object literal for a circle
+
+let circle = {
+    radius: 2,
+    get radius() {
+        return radius;
+    },
+    set radius(value) {
+        radius = value;
+    },
+    get area() {
+        return Math.pow(radius, 2) * Math.PI;
+    }
+};
+
+circle.radius = 2;
+console.log(circle.area);
+
